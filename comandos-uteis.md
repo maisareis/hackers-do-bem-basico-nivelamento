@@ -69,7 +69,9 @@
 | `uname -a` | Info do sistema |
 | `lsb_release -a` | Versão da distribuição |
 | `systemctl status serviço` | Status do serviço |
-| `systemctl start/stop/restart` | Inicia/para/reinicia |
+| `systemctl start serviço` | Inicia serviço |
+| `systemctl stop serviço` | Para serviço |
+| `systemctl restart serviço` | Reinicia serviço |
 | `journalctl -xe` | Logs do sistema |
 
 ### Pacotes (Debian/Ubuntu)
@@ -89,13 +91,13 @@
 |---------|-----------|
 | `grep "texto" arquivo` | Busca texto no arquivo |
 | `grep -r "texto" pasta` | Busca recursivo |
-| `|` (pipe) | Conecta comandos (ex: `ls \| grep txt`) |
+| `\|` (pipe) | Conecta comandos (ex: `ls \| grep txt`) |
 | `>` | Redireciona saída (sobrescreve) |
 | `>>` | Redireciona saída (adiciona) |
 
 ---
 
-## 🪟 Windows (CMD)
+# 🪟 Windows (CMD)
 
 ### Navegação e Arquivos
 | Comando | Descrição |
@@ -148,11 +150,11 @@
 
 ---
 
-## 🌐 Redes (geral)
+# 🌐 Redes (geral)
 
 ### Portas Comuns
 | Porta | Protocolo | Serviço |
-|-------|-----------|---------|
+|------|-----------|---------|
 | 20/21 | TCP | FTP |
 | 22 | TCP | SSH |
 | 23 | TCP | Telnet |
@@ -174,24 +176,24 @@
 - **/24** = 255.255.255.0 (256 IPs, 254 válidos)
 - **/16** = 255.255.0.0 (65.536 IPs)
 - **/8** = 255.0.0.0 (16.777.216 IPs)
-- **IP Privados RFC 1918**: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16
+- **IP Privados RFC1918**: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16
 - **Loopback**: 127.0.0.1
 - **Broadcast**: último IP da rede
 
 ---
 
-## 🔧 Ferramentas
+# 🔧 Ferramentas
 
 ### Scan e Exploração
 | Ferramenta | Uso básico |
 |------------|------------|
 | **nmap** | `nmap -sV 192.168.1.1` |
-| **nmap** | `nmap -p- 192.168.1.1` (todas portas) |
-| **nmap** | `nmap -A 192.168.1.1` (agressivo) |
-| **netcat** | `nc -zv ip porta` (testa porta) |
-| **netcat** | `nc -lvnp 443` (modo listen) |
-| **wireshark** | Análise de pacotes (gráfico) |
-| **tcpdump** | `tcpdump -i eth0` (CLI) |
+| **nmap** | `nmap -p- 192.168.1.1` |
+| **nmap** | `nmap -A 192.168.1.1` |
+| **netcat** | `nc -zv ip porta` |
+| **netcat** | `nc -lvnp 443` |
+| **wireshark** | Análise de pacotes (GUI) |
+| **tcpdump** | `tcpdump -i eth0` |
 
 ### HTTP
 | Ferramenta | Uso básico |
@@ -199,7 +201,7 @@
 | **curl** | `curl http://site.com` |
 | **curl** | `curl -X POST -d "dado" http://site.com` |
 | **wget** | `wget http://site.com/arquivo` |
-| **whatweb** | `whatweb site.com` (identifica tecnologias) |
+| **whatweb** | `whatweb site.com` |
 
 ### Senhas e Hashes
 | Ferramenta | Uso básico |
@@ -210,12 +212,50 @@
 
 ---
 
-## 📝 Scripts Rápidos
+# 📝 Scripts Rápidos
 
-### Bash - Verificar portas abertas
+## Bash - Verificar portas abertas
 ```bash
 #!/bin/bash
 host="127.0.0.1"
-for porta in 22 80 443 3389; do
+
+for porta in 22 80 443 3389
+do
   nc -zv "$host" "$porta" 2>/dev/null && echo "Porta $porta aberta" || echo "Porta $porta fechada"
 done
+```
+
+## Bash - Monitorar log de autenticação
+```bash
+#!/bin/bash
+tail -f /var/log/auth.log | grep "Failed password"
+```
+
+## PowerShell - Verificar conexões ativas
+```powershell
+Get-NetTCPConnection | Where-Object {$_.State -eq "Established"}
+```
+
+## PowerShell - Listar processos suspeitos
+```powershell
+Get-Process | Where-Object { $_.CPU -gt 50 } | Format-Table Name, CPU, ID
+```
+
+## Bash - Backup simples
+```bash
+#!/bin/bash
+DATA=$(date +%Y%m%d)
+
+tar -czf backup_$DATA.tar.gz /home/usuario/documentos
+
+echo "Backup concluído: backup_$DATA.tar.gz"
+```
+
+## Bash - Verificar espaço em disco
+```bash
+#!/bin/bash
+df -h | grep -E '^/dev/' | while read linha
+do
+  echo "Espaço em disco: $linha"
+done
+```
