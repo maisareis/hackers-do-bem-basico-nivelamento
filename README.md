@@ -36,3 +36,26 @@ Minhas anotações da minha participação na 1ª onda do programa Hackers do Be
 [comandos-uteis.md](./comandos-uteis.md)
 
 ## 📌 Estrutura do Repositório
+
+- /
+  - README.md
+  - basico/
+    - 01-conceitos-desenvolvimento/
+    - 02-vulnerabilidades/
+    - 03-grc/
+    - 04-nuvem/
+    - 05-ameacas/
+    - 06-criptografia/
+  - nivelamento/
+    - 07-camada-enlace/
+    - 08-ipv4/
+    - 09-ipv6/
+    - 10-transporte/
+    - 11-aplicacao/
+    - 12-so-scripts/
+  - GLOSSARIO.md
+  - comandos-uteis.md
+
+---
+
+⭐️ Se esse repositório te ajudou, considere dar uma estrela!
